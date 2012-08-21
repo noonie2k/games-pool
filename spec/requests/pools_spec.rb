@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe "Users" do
+describe "Pools" do
   describe "while logged out" do
-    describe "GET /users" do
+    describe "GET /pools" do
       it "redirects to the login page" do
-        get users_path
-        response.status.should redirect_to(login_path)
+        get pools_path
+        response.should redirect_to(login_path)
       end
     end
   end
@@ -16,9 +16,9 @@ describe "Users" do
       post login_path, { username: user.username, password: user.password }
     end
 
-    describe "GET /users" do
+    describe "GET /pools" do
       it "should be successful" do
-        get users_path
+        get pools_path
         response.should be_success
       end
     end

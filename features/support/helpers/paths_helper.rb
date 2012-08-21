@@ -1,4 +1,4 @@
-module NavigationHelpers
+module PathsHelpers
   def path_to(page_name)
     case page_name
 
@@ -15,11 +15,14 @@ module NavigationHelpers
   end
 
   def match_rails_path_for(page_name)
-    if page_name.match(/the (.+) page/)
-      return send("#{$1.gsub(' ', '_')}_path") rescue nil
+    if page_name.match(/the (first|last) (.+) model page/)
+      model = eval($2.capitalize)
+      model_instance = model.send("#{$1}")
+      send("#{$2}_path", model_instance)
+    elsif page_name.match(/the (.+) page/)
+      send("#{$1.gsub(' ', '_')}_path") rescue nil
     end
   end
 end
 
-
-World(NavigationHelpers)
+World(PathsHelpers)

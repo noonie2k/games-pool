@@ -1,4 +1,6 @@
 GamesPool::Application.routes.draw do
+  resources :pools
+
   resources :users
 
   controller :sessions do
