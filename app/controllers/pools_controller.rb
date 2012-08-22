@@ -88,6 +88,9 @@ class PoolsController < ApplicationController
   # GET /pools/1/join
   def join
     @pool = Pool.find(params[:id])
+    if @pool.members.include?(logged_in_user)
+      redirect_to @pool, notice: 'Welcome back'
+    end
   end
 
   # POST /pools/1/join

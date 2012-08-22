@@ -9,12 +9,20 @@ Feature: Joining Pools
     When I log in with valid credentials
 
   Scenario: User joins a pool
-    When I join the existing pool with a valid password
+    When I click to join the existing pool
+      And I enter a valid password
     Then I should be redirected to the last pool page
       And I should be shown a successful join message
       And I should be a member of the existing pool
 
   Scenario: User attempts to join a pool with an incorrect password
-    When I join the existing pool with an invalid password
-    Then I should be shown in invalid password message
+    When I click to join the existing pool
+      And I enter an invalid password
+    Then I should be shown a failed join message with invalid password
       And I should not be a member of the existing pool
+
+  Scenario: User attempts to join a pool again
+    Given I am a member of the existing pool
+    When I click to join the existing pool
+    Then I should be redirected to the last pool page
+      And I should be shown a failed join message with welcome back

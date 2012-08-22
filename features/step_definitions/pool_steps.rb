@@ -3,6 +3,12 @@ Given /^There is an existing pool$/ do
   @pool = FactoryGirl::create(:pool)
 end
 
+### GIVEN ###
+Given /^I am a member of the existing pool$/ do
+  @pool.memberships.build({ user: @user })
+  @pool.save
+end
+
 ### WHEN ###
 When /^I create a pool$/ do
   @pool = FactoryGirl::build(:pool)
@@ -14,16 +20,17 @@ When /^I create a pool$/ do
   click_button 'Create Pool'
 end
 
-When /^I join the existing pool with a valid password$/ do
+When /^I click to join the existing pool$/ do
   visit pools_path
   click_link "join-#{@pool.id}"
+end
+
+When /^I enter a valid password$/ do
   fill_in 'password', with: @pool.password
   click_button 'Join'
 end
-
-When /^I join the existing pool with an invalid password$/ do
-  visit pools_path
-  click_link "join-#{@pool.id}"
+  
+When /^I enter an invalid password$/ do
   fill_in 'password', with: 'This is not the correct password'
   click_button 'Join'
 end
@@ -37,8 +44,12 @@ Then /^I should be shown a successful join message$/ do
   page.should have_content "Welcome to #{@pool.name}"
 end
 
-Then /^I should be shown in invalid password message$/ do
-  page.should have_content 'The password provided was invalid'
+Then /^I should be shown a failed join message with (.+)$/ do |message|
+  case message
+  when 'invalid password' then page.should have_content 'The password provided was invalid'
+  when 'welcome back' then page.should have_content 'Welcome back'
+  else raise 'Unknown Message'
+  end
 end
 
 Then /^I should (not )?be a member of the existing pool$/ do |not_a_member|

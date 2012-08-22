@@ -178,10 +178,22 @@ describe PoolsController do
   end
 
   describe "GET join" do
-    it "assigns the selected pool as @pool" do
-      pool = FactoryGirl::create(:pool)
-      get :join, { id: pool.id }, valid_session
-      assigns(:pool).should == pool
+    describe "when already a member of the pool" do
+      it "redirects to the pool page" do
+        pool = FactoryGirl::create(:pool)
+        pool.memberships.build({ user: @user })
+        pool.save
+        get :join, { id: pool.id }, valid_session
+        response.should redirect_to pool
+      end
+    end
+
+    describe "when not a member of the pool" do
+      it "assigns the selected pool as @pool" do
+        pool = FactoryGirl::create(:pool)
+        get :join, { id: pool.id }, valid_session
+        assigns(:pool).should == pool
+      end
     end
   end
 
