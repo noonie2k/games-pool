@@ -1,0 +1,9 @@
+<div class="page-header">
+  <h1>Join Pool <%= @pool.name %></h1>
+</div>
+
+<%= form_tag join_pool_path(@pool), class: 'form-inline' do %>
+  <%- if flash[:invalid_password] %><div class="alert alert-error"><%= flash[:invalid_password] %></div><%- end %>
+  <%= text_field_tag :password, '', class: 'input-small', placeholder: 'Password' %>
+  <%= submit_tag 'Join', class: 'btn btn-primary' %>
+<% end %>

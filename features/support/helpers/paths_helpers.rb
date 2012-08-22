@@ -15,7 +15,7 @@ module PathsHelpers
   end
 
   def match_rails_path_for(page_name)
-    if page_name.match(/the (first|last) (.+) model page/)
+    if page_name.match(/the (first|last) (.+) page/)
       model = eval($2.capitalize)
       model_instance = model.send("#{$1}")
       send("#{$2}_path", model_instance)

@@ -5,8 +5,12 @@ class ApplicationController < ActionController::Base
 
   protected
   def login_required
-    unless session[:user_id] && User.find(session[:user_id])
+    unless logged_in_user
       redirect_to login_path, notice: 'The requested action requires you to log in'
     end
+  end
+
+  def logged_in_user
+    User.find(session[:user_id]) if session[:user_id]
   end
 end

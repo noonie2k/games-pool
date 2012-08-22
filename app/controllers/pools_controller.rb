@@ -84,4 +84,33 @@ class PoolsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # GET /pools/1/join
+  def join
+    @pool = Pool.find(params[:id])
+  end
+
+  # POST /pools/1/join
+  # POST /pools/1/join.json
+  def create_membership
+    @pool = Pool.find(params[:id])
+    membership = @pool.memberships.build({
+      user: logged_in_user
+    })
+
+    authenticated = @pool.authenticate(params[:password])
+    respond_to do |format|
+      if authenticated && @pool.save
+        format.html { redirect_to @pool, notice: "Welcome to #{@pool.name}" }
+        format.json { render status: :created, location: @pool }
+      elsif authenticated === false
+        flash[:invalid_password] = 'The password provided was invalid'
+        format.html { render action: "join" }
+        format.json { render json: @pool.errors, status: :unprocessable_entity }
+      else
+        format.html { render action: "join" }
+        format.json { render json: @pool.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end

@@ -4,7 +4,7 @@ When /^I go to (.+)$/ do |page|
 end
 
 ### THEN ###
-Then /^I should be redirected to (.+)$/ do |page|
-  current_path.should == path_to(page)
+Then /^I should be redirected to (.+)$/ do |_expected_page|
+  current_path.should == path_to(_expected_page)
 end
 

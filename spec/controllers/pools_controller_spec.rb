@@ -177,4 +177,33 @@ describe PoolsController do
     end
   end
 
+  describe "GET join" do
+    it "assigns the selected pool as @pool" do
+      pool = FactoryGirl::create(:pool)
+      get :join, { id: pool.id }, valid_session
+      assigns(:pool).should == pool
+    end
+  end
+
+  describe "POST join" do
+    describe "with valid password" do
+      it "creates a membership and redirects to the pool" do
+        pool = FactoryGirl::create(:pool)
+        expect {
+          post :create_membership, { id: pool.id, password: pool.password }, valid_session
+        }.to change(Membership, :count).by(1)
+        response.should redirect_to(pool_path(pool))
+      end
+    end
+
+    describe "with invalid password" do
+      it "re-renders the 'join' template" do
+        pool = FactoryGirl::create(:pool)
+        # Trigger the behavior that occurs when invalid params are submitted
+        Membership.any_instance.stub(:save).and_return(false)
+        post :create_membership, { id: pool.id, password: 'This is incorrect' }, valid_session
+        response.should render_template('join')
+      end
+    end
+  end
 end

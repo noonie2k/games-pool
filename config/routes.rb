@@ -1,5 +1,10 @@
 GamesPool::Application.routes.draw do
-  resources :pools
+  resources :pools do
+    member do
+      get 'join'
+      post 'join' => :create_membership
+    end
+  end
 
   resources :users
 

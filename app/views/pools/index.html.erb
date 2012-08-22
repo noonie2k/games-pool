@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Password digest</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,7 +12,7 @@
 <% @pools.each do |pool| %>
   <tr>
     <td><%= pool.name %></td>
-    <td><%= pool.password_digest %></td>
+    <td><%= link_to 'Join', join_pool_path(pool), id: "join-#{pool.id}" %></td>
     <td><%= link_to 'Show', pool %></td>
     <td><%= link_to 'Edit', edit_pool_path(pool) %></td>
     <td><%= link_to 'Destroy', pool, method: :delete, data: { confirm: 'Are you sure?' } %></td>

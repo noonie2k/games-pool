@@ -8,6 +8,6 @@ Feature: Pools Administration
     When I log in with valid credentials
 
   Scenario: Creating a pool with a password
-    When I create a pool with a password
+    When I create a pool
     Then I should be shown a success message
-      And I should be redirected to the last pool model page
+      And I should be redirected to the last pool page
