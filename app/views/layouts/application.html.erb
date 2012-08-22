@@ -67,7 +67,8 @@
       <div class="content">
         <div class="row">
            <div class="span9">
-            <%- if notice %><div class="alert alert-info"><%= notice %></div><%- end %>
+              <% if notice %><div class="alert alert-info"><%= notice %></div><% end %>
+              <% if alert %><div class="alert alert-error"><%= alert %></div><% end %>
               <%= yield %>
             </div>
             <div class="span3">

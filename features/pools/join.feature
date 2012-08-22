@@ -5,8 +5,8 @@ Feature: Joining Pools
 
   Background:
     Given I have a registered account
+      And I am logged in
       And There is an existing pool
-    When I log in with valid credentials
 
   Scenario: User joins a pool
     When I click to join the existing pool

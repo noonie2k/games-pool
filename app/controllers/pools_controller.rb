@@ -16,8 +16,13 @@ class PoolsController < ApplicationController
     @pool = Pool.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @pool }
+      if @pool.members.include?(logged_in_user)
+        format.html # show.html.erb
+        format.json { render json: @pool }
+      else
+        format.html { redirect_to pools_path, alert: 'You are not a member of the selected pool' }
+        format.json { render json: @pool, location: pools_path }
+      end
     end
   end
 
@@ -48,8 +53,14 @@ class PoolsController < ApplicationController
 
     respond_to do |format|
       if @pool.save
-        format.html { redirect_to @pool, notice: "Successfully created the pool #{@pool.name}" }
-        format.json { render json: @pool, status: :created, location: @pool }
+        membership = @pool.memberships.build({ user: logged_in_user })
+        if membership.save
+          format.html { redirect_to @pool, notice: "Welcome to #{@pool.name}" }
+          format.json { render json: @pool, status: :created, location: @pool }
+        else
+          format.html { redirect_to pools_path, notice: "Unable to join #{@pool.name}" }
+          format.json { render json: membership.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @pool.errors, status: :unprocessable_entity }
@@ -89,7 +100,7 @@ class PoolsController < ApplicationController
   def join
     @pool = Pool.find(params[:id])
     if @pool.members.include?(logged_in_user)
-      redirect_to @pool, notice: 'Welcome back'
+      redirect_to @pool, notice: "Welcome back to #{@pool.name}"
     end
   end
 

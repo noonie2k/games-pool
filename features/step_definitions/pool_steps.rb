@@ -47,7 +47,15 @@ end
 Then /^I should be shown a failed join message with (.+)$/ do |message|
   case message
   when 'invalid password' then page.should have_content 'The password provided was invalid'
-  when 'welcome back' then page.should have_content 'Welcome back'
+  when 'welcome back' then page.should have_content "Welcome back to #{@pool.name}"
+  else raise 'Unknown Message'
+  end
+end
+
+Then /^I should be shown a notice with (.+)$/ do |message|
+  case message
+  when 'welcome' then page.should have_content "Welcome to #{@pool.name}"
+  when 'not a member' then page.should have_content 'You are not a member of the selected pool'
   else raise 'Unknown Message'
   end
 end

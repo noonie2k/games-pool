@@ -59,10 +59,20 @@ describe PoolsController do
   end
 
   describe "GET show" do
-    it "assigns the requested pool as @pool" do
-      pool = FactoryGirl::create(:pool)
-      get :show, {:id => pool.to_param}, valid_session
-      assigns(:pool).should eq(pool)
+    describe "when user is not a member" do
+      it "redirects to the pools page" do
+        pool = FactoryGirl::create(:pool)
+        get :show, {:id => pool.to_param}, valid_session
+        response.should redirect_to pools_path
+      end
+    end
+    describe "when user is a member" do
+      it "assigns the requested pool as @pool" do
+        pool = FactoryGirl::create(:pool)
+        pool.memberships.build({ user: @user })
+        get :show, {:id => pool.to_param}, valid_session
+        assigns(:pool).should eq(pool)
+      end
     end
   end
 
@@ -83,10 +93,11 @@ describe PoolsController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Pool" do
+      it "creates a new Pool and creates a membership for the user" do
         expect {
           post :create, {:pool => valid_attributes}, valid_session
         }.to change(Pool, :count).by(1)
+        Pool.last.members.should include(@user)
       end
 
       it "assigns a newly created pool as @pool" do

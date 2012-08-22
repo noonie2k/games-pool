@@ -7,6 +7,10 @@ Given /^I have a registered account$/ do
   @user = FactoryGirl::create(:user)
 end
 
+Given /^I am logged in$/ do
+  steps %Q{ When I log in with valid credentials }
+end
+
 Given /^I am logged out$/ do
   visit logout_path
 end
