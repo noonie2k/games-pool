@@ -14,5 +14,10 @@ GamesPool::Application.routes.draw do
     get 'logout'
   end
 
+  # Administration Namespace
+  namespace :admin do
+    resources :platforms
+  end
+
   root to: 'home#index'
 end

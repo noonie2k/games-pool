@@ -34,6 +34,7 @@ describe UsersController do
   # Represents a valid set of update attributes
   def valid_update
     update_attributes = valid_attributes
+    update_attributes.delete(:admin)
     update_attributes.delete(:password)
     update_attributes.delete(:password_confirmation)
 

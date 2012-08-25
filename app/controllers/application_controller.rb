@@ -10,6 +10,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin_login_required
+    unless logged_in_user && logged_in_user.admin
+      redirect_to root_path
+    end
+  end
+
   def logged_in_user
     User.find(session[:user_id]) if session[:user_id]
   end

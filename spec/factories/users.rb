@@ -7,6 +7,16 @@ FactoryGirl.define do
     name 'Some Existing User'
     password 'password'
     password_confirmation 'password'
+    admin false
+  end
+
+  factory :admin, class: User do
+    username 'admin'
+    email 'some.admin@home.com'
+    name 'Some Admin'
+    password 'secret'
+    password_confirmation 'secret'
+    admin true
   end
 
   factory :user do
@@ -15,5 +25,6 @@ FactoryGirl.define do
     name 'Some User'
     password 'password'
     password_confirmation 'password'
+    admin false
   end
 end

@@ -69,6 +69,8 @@ module GamesPool
     config.generators do |g|
       g.view_specs false
       g.helper_specs false
+      g.request_specs false
+      g.routing_specs false
     end
   end
 end
