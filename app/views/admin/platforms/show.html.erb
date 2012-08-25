@@ -1,15 +1,23 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Platform -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
 
-<p>
-  <b>Name:</b>
-  <%= @platform.name %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @platform.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:color_code) %>:</strong></dt>
+  <dd><%= @platform.color_code %></dd>
+</dl>
 
-<p>
-  <b>Color code:</b>
-  <%= @platform.color_code %>
-</p>
-
-
-<%= link_to 'Edit', edit_platform_path(@platform) %> |
-<%= link_to 'Back', platforms_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              platforms_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_admin_platform_path(@platform), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              admin_platform_path(@platform),
+              :method => 'delete',
+              :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+              :class => 'btn btn-danger' %>
+</div>

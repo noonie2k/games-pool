@@ -52,14 +52,6 @@ Then /^I should be shown a failed join message with (.+)$/ do |message|
   end
 end
 
-Then /^I should be shown a notice with (.+)$/ do |message|
-  case message
-  when 'welcome' then page.should have_content "Welcome to #{@pool.name}"
-  when 'not a member' then page.should have_content 'You are not a member of the selected pool'
-  else raise 'Unknown Message'
-  end
-end
-
 Then /^I should (not )?be a member of the existing pool$/ do |not_a_member|
   members = @pool.members
 

@@ -19,8 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PoolsController do
-
-  # Before each test create a user
+  
   before(:each) do
     @user = FactoryGirl::create(:user)
   end
@@ -45,9 +44,7 @@ describe PoolsController do
   # in order to pass any filters (e.g. authentication) defined in
   # PoolsController. Be sure to keep this updated too.
   def valid_session
-    {
-      user_id: @user.id
-    }
+    { user_id: @user.id }
   end
 
   describe "GET index" do

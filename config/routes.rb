@@ -1,7 +1,9 @@
 GamesPool::Application.routes.draw do
+  resources :games
+
   resources :pools do
     member do
-      get 'join'
+      get  'join'
       post 'join' => :create_membership
     end
   end
@@ -9,9 +11,9 @@ GamesPool::Application.routes.draw do
   resources :users
 
   controller :sessions do
-    get 'login'
-    post 'login' => :create_session
-    get 'logout'
+    get  'login'
+    post 'login'  => :create_session
+    get  'logout'
   end
 
   # Administration Namespace

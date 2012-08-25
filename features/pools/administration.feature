@@ -5,7 +5,7 @@ Feature: Pools Administration
 
   Background:
   	Given I have a registered account
-    When I log in with valid credentials
+      And I am logged in
 
   Scenario: Creating a pool with a password
     When I create a pool

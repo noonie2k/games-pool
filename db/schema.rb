@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120823001026) do
+ActiveRecord::Schema.define(:version => 20120825022359) do
+
+  create_table "games", :force => true do |t|
+    t.string   "title"
+    t.integer  "platform_id"
+    t.string   "img_thumb_url"
+    t.string   "img_tiny_url"
+    t.integer  "owner_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "games", ["owner_id"], :name => "index_games_on_owner_id"
+  add_index "games", ["platform_id"], :name => "index_games_on_platform_id"
 
   create_table "memberships", :force => true do |t|
     t.integer  "pool_id"

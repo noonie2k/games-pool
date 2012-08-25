@@ -1,0 +1,10 @@
+<%= simple_form_for @game, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :title %>
+  <%= f.association :platform, prompt: 'Choose game platform...' %>
+  <%= f.input :img_thumb_url, label: 'Thumbnail URL' %>
+  <%= f.input :img_tiny_url, label: 'Tiny Thumbnail URL' %>
+
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+  </div>
+<% end %>
