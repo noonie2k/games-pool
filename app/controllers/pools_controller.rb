@@ -98,32 +98,49 @@ class PoolsController < ApplicationController
     end
   end
 
-  # GET /pools/1/join
+  # GET /pools/join
   def join
-    @pool = Pool.find(params[:id])
-    if @pool.members.include?(logged_in_user)
-      redirect_to @pool, notice: "Welcome back to #{@pool.name}"
-    end
   end
 
   # POST /pools/1/join
   # POST /pools/1/join.json
   def create_membership
-    @pool = Pool.find(params[:id])
-    membership = @pool.memberships.build({
-      user: logged_in_user
-    })
+    @pool = Pool.find_by_invite_code(params[:invite_code])
 
-    authenticated = @pool.authenticate(params[:invite_code])
-    respond_to do |format|
-      if authenticated && @pool.save
-        format.html { redirect_to @pool, notice: "Welcome to #{@pool.name}" }
-        format.json { render status: :created, location: @pool }
-      elsif authenticated === false
-        flash[:invalid_code] = 'The invite code provided was invalid'
-        format.html { render action: "join" }
-        format.json { render json: @pool.errors, status: :unprocessable_entity }
+    if @pool
+      if @pool.memberships.where(user_id: logged_in_user.id).any?
+        respond_to do |format|
+          format.html { redirect_to @pool, notice: "Welcome back to #{@pool.name}" }
+          format.json { render status: :created, location: @pool }
+        end
+      
       else
+
+        membership = @pool.memberships.build({
+          user: logged_in_user
+        })
+
+        authenticated = @pool.authenticate(params[:invite_code])
+
+        respond_to do |format|
+          if authenticated && @pool.save
+            format.html { redirect_to @pool, notice: "Welcome to #{@pool.name}" }
+            format.json { render status: :created, location: @pool }
+          elsif @authenticated === false
+            flash[:invalid_code] = 'The invite code provided was invalid'
+            format.html { render action: "join" }
+            format.json { render json: @pool.errors, status: :unprocessable_entity }
+          else
+            format.html { render action: "join" }
+            format.json { render json: @pool.errors, status: :unprocessable_entity }
+          end
+        end
+      end
+      
+    else
+
+      respond_to do |format|
+        flash[:invalid_code] = 'The invite code provided was invalid'
         format.html { render action: "join" }
         format.json { render json: @pool.errors, status: :unprocessable_entity }
       end

@@ -7,7 +7,7 @@ GamesPool::Application.routes.draw do
   end
 
   resources :pools do
-    member do
+    collection do
       get  'join'
       post 'join' => :create_membership
     end
