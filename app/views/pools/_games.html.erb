@@ -1,0 +1,7 @@
+<ul id="games" class="thumbnails">
+  <%- @games.each do |game| %>
+    <%= render 'game', locals: { game: game } %>
+  <%- end %>
+</ul>
+
+<%= will_paginate @games %>

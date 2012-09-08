@@ -1,17 +1,15 @@
 <div class="page-header">
   <h1>
     <%= @pool.name %>
-    <small class="label"> <%= @pool.invite_code %></small>
+    <small class="label"><%= @pool.invite_code %></small>
   </h1>
 </div>
 
 <p id="notice"><%= notice %></p>
 
-<ul class="thumbnails">
-  <%- @games.each do |game| %>
-    <%= render 'game', locals: { game: game } %>
-  <%- end %>
-</ul>
+<div id="games">
+  <%= render 'games', locals: { games: @games } %>
+</div>
 
 <div id="game-details-modal" class="modal hide">
   <div class="modal-header">
