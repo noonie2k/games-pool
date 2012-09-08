@@ -19,3 +19,8 @@
     position: 5px 5px;
   }
 }
+
+.game.shadow {
+  -webkit-box-shadow:  5px 5px 10px 5px rgba(0, 0, 0, 0.3);
+  box-shadow:  5px 5px 10px 5px rgba(0, 0, 0, 0.3);
+}
