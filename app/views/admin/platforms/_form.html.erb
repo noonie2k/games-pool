@@ -1,4 +1,4 @@
-<%= simple_form_for @platform, url: admin_platforms_path, :html => { :class => 'form-horizontal' } do |f| %>
+<%= simple_form_for [:admin, @platform], :html => { :class => 'form-horizontal' } do |f| %>
   <%= f.input :name %>
   <%= f.input :color_code %>
   <div class="form-actions">

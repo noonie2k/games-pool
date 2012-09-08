@@ -14,6 +14,7 @@ class PoolsController < ApplicationController
   # GET /pools/1.json
   def show
     @pool = Pool.find(params[:id])
+    @games = @pool.members.all.collect { |user| user.games }.flatten.sort { |a, b| a.title <=> b.title }
 
     respond_to do |format|
       if @pool.members.include?(logged_in_user)

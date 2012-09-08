@@ -32,6 +32,28 @@ class GamesController < ApplicationController
     end
   end
 
+  # GET /games/find
+  # POST /games/find/:title.json
+  def find
+    respond_to do |format|
+      format.html
+      format.js
+      format.json do
+        if params[:game].present? && params[:game][:title].present?
+          search = GiantBomb::Search.new
+          search.limit(10)
+          search.resources('game')
+          search.fields('id,name,image')
+          search.query(params[:game][:title])
+          results = search.fetch_response
+          render json: results
+        else
+          render json: { results: [] }
+        end
+      end
+    end
+  end
+
   # GET /games/1/edit
   def edit
     @game = Game.find(params[:id])
@@ -44,7 +66,7 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
+        format.html { redirect_to account_user_path(logged_in_user), notice: 'Game was successfully created.' }
         format.json { render json: @game, status: :created, location: @game }
       else
         format.html { render action: "new" }
@@ -60,7 +82,7 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.update_attributes(params[:game])
-        format.html { redirect_to @game, notice: 'Game was successfully updated.' }
+        format.html { redirect_to account_user_path(logged_in_user), notice: "#{@game.title} was updated successfully" }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -76,7 +98,7 @@ class GamesController < ApplicationController
     @game.destroy
 
     respond_to do |format|
-      format.html { redirect_to games_url }
+      format.html { redirect_to account_user_path }
       format.json { head :no_content }
     end
   end

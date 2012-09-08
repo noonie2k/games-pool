@@ -11,3 +11,11 @@
  *= require_self
  *= require_tree .
  */
+
+.spinner {
+  background: {
+    image: url('/assets/spinner.gif');
+    repeat: no-repeat;
+    position: 5px 5px;
+  }
+}

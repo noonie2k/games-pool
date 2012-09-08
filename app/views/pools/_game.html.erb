@@ -1,0 +1,8 @@
+<li class="span3">
+  <div class="well game" style="border-top-color: <%= locals[:game].platform.color_code %>">
+    <%= link_to locals[:game], class: 'thumnail' do %>
+      <%= image_tag locals[:game].img_thumb_url %>
+    <% end %>
+    </a>
+  </div>
+</li>

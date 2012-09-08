@@ -1,5 +1,10 @@
 GamesPool::Application.routes.draw do
-  resources :games
+  resources :games do
+    collection do
+      get  'find'
+      post 'find'
+    end
+  end
 
   resources :pools do
     member do
@@ -8,7 +13,11 @@ GamesPool::Application.routes.draw do
     end
   end
 
-  resources :users
+  resources :users do
+    member do
+      get 'account'
+    end
+  end
 
   controller :sessions do
     get  'login'

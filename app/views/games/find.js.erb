@@ -1,0 +1,58 @@
+if ($('#game_title').val().length >= 3) {
+
+  $('#game_title').next('.add-on').addClass('spinner').find('a').hide();
+
+  $.ajax({
+    type: 'post',
+    url: '/games/find.json',
+    data: $('#game_title').serialize(),
+
+    success: function(data) {
+      var searchResults = '';
+      console.log(data);
+      for (result in data['results']) {
+        var thisResult = data['results'][result];
+        
+        var aElement = $('<a></a>');
+        aElement.attr('href', '#');
+        aElement.attr('class', 'search-result');
+        aElement.attr('title', thisResult['name']);
+        if (thisResult['image']) {
+          aElement.html('<img src="' + thisResult['image']['tiny_url'] + '" />');
+          aElement.attr('thumb_url', thisResult['image']['thumb_url']);
+          aElement.attr('tiny_url', thisResult['image']['tiny_url']);
+        } else {
+          aElement.html('<img src="/assets/placeholder.png" />');
+        }
+        aElement.html(aElement.html() + thisResult['name']);
+
+        var liElement = $('<li></li>');
+        liElement.html(aElement);
+
+        searchResults += liElement.outerHTML();
+      }
+
+      var total = data['number_of_total_results'];
+      var limit = data['number_of_page_results'];
+      if ( total > limit) {
+        searchResults += '<li class="alert alert-info">Displaying ' + limit + ' of ' + total + ' results, please make your search more specific</li>';
+      }
+
+      $('#search-results').html(searchResults);
+
+      $('.search-result').click(function(e) {
+        e.preventDefault();
+
+        $('#game_title').val($(this).attr('title'));
+        $('#game_img_thumb_url').val($(this).attr('thumb_url'));
+        $('#game_img_tiny_url').val($(this).attr('tiny_url'));
+
+        $('#search-results-modal').modal('hide');
+      });
+
+      $('#search-results-modal').modal();
+
+      $('#game_title').next('.add-on').removeClass('spinner').find('a').show();
+    }
+  });
+}

@@ -57,6 +57,37 @@
                 <li><%= link_to 'Log In', login_path %></li>
                 <li><%= link_to 'Register', new_user_path %></li>
               </ul>
+            <%- else %>
+              <ul class="nav pull-right">
+                <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">
+                    <%= logged_in_user.name %>
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to 'My Account', account_user_path(logged_in_user) %></li>
+                    <%- if logged_in_user.admin %>
+                      <li class="divider"></li>
+                      <li><%= link_to 'Platforms', admin_platforms_path %></li>
+                    <%- end %>
+                    <li class="divider"></li>
+                    <li><%= link_to 'Log Out', logout_path %></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="nav pull-right">
+                <li class="dropdown">
+                  <a href="#" data-toggle="dropdown">
+                    Pools
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <%- logged_in_user.pools.each do |pool| %>
+                      <li><%= link_to pool.name, pool %></li>
+                    <%- end %>
+                  </ul>
+                </li>
+              </ul>
             <%- end %>
           </div><!--/.nav-collapse -->
         </div>

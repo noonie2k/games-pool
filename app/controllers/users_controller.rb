@@ -23,6 +23,14 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /user/1/account
+  def account
+    @user = User.find(params[:id])
+    redirect_to root_path unless logged_in_user === @user
+    
+    @games = @user.games.order(:title)
+  end
+
   # GET /users/new
   # GET /users/new.json
   def new

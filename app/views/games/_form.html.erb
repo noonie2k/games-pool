@@ -1,5 +1,12 @@
 <%= simple_form_for @game, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :title %>
+  <%= f.input :title, wrapper: :append do %>
+    <%= f.input_field :title %>
+    <span class="add-on">
+      <%= link_to find_games_path, id: 'perform-search', remote: true do %>
+        <i class="icon-search"></i>
+      <% end %>
+    </span>
+  <% end %>
   <%= f.association :platform, prompt: 'Choose game platform...' %>
   <%= f.input :img_thumb_url, label: 'Thumbnail URL' %>
   <%= f.input :img_tiny_url, label: 'Tiny Thumbnail URL' %>
@@ -8,3 +15,16 @@
     <%= f.button :submit, :class => 'btn-primary' %>
   </div>
 <% end %>
+
+<div id="search-results-modal" class="modal hide">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">x</button>
+    <h3>Search Results</h3>
+  </div>
+  <div class="modal-body">
+    <ul id="search-results" class="nav nav-pills nav-stacked"></ul>
+  </div>
+  <div class="modal-footer">
+    <button class="close" data-dismiss="modal">Close</button>
+  </div>
+</div>

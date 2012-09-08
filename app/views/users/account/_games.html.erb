@@ -1,0 +1,30 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%- @games.each do |game| %>
+      <tr>
+        <td>
+          <%= image_tag game.img_tiny_url %>
+          <%= game.title %>
+        </td>
+        <td>
+          <%= link_to 'Edit', edit_game_path(game), class: 'btn btn-mini' %>
+          <%= link_to 'Delete',
+                      game_path(game),
+                      :method => :delete,
+                      :confirm => 'Are you sure?',
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <%- end %>
+  </tbody>
+</table>
+
+<div class="form-actions">
+  <%= link_to 'Add a Game', new_game_path, class: 'btn btn-primary' %>
+</div>

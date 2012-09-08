@@ -1,0 +1,14 @@
+<div class="page-header">
+  <h1>
+    <%= @user.name %>
+    <small> My Account</small>
+  </h1>
+</div>
+
+<ul id="account-tabs" class="nav nav-tabs">
+  <li class="active"><a href="#my-games" data-toggle="tab">My Games</a></li>
+</ul>
+
+<div id="account-tabs-content" class="tab-content">
+  <div id="my-games" class="tab-pane fade active in"><%= render 'users/account/games' %></div>
+</div>

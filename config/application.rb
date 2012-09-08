@@ -72,5 +72,8 @@ module GamesPool
       g.request_specs false
       g.routing_specs false
     end
+
+    # GiantBomb API Config
+    GiantBomb::Api.key('398906fa3186577b9ae79296db94d48bc36ab537')
   end
 end
