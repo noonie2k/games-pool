@@ -6,11 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create({
-  username: 'admin',
-  email: 'adam.ian.noon@gmail.com',
-  name: 'Administrator',
-  password: 'secret',
-  password_confirmation: 'secret',
-  admin: true
-})
+Platform.create({ color_code: '#55ff55', name: 'Xbox 360' })
+Platform.create({ color_code: '#888888', name: 'PC' })
+Platform.create({ color_code: '#ffffff', name: 'Wii' })
+Platform.create({ color_code: '#3333dd', name: 'PS3' })
