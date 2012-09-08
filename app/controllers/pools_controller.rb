@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 class PoolsController < ApplicationController
   # GET /pools
   # GET /pools.json
@@ -47,10 +49,9 @@ class PoolsController < ApplicationController
   # POST /pools.json
   def create
     @pool = Pool.new({
-      name: params[:pool][:name]
+      name: params[:pool][:name],
+      invite_code: Digest::SHA1.hexdigest("#{params[:pool][:name]}-#{Time.now.to_i}-#{rand}")[8..16]
     })
-    @pool.password = params[:pool][:password]
-    @pool.password_confirmation = params[:pool][:password_confirmation]
 
     respond_to do |format|
       if @pool.save
@@ -113,13 +114,13 @@ class PoolsController < ApplicationController
       user: logged_in_user
     })
 
-    authenticated = @pool.authenticate(params[:password])
+    authenticated = @pool.authenticate(params[:invite_code])
     respond_to do |format|
       if authenticated && @pool.save
         format.html { redirect_to @pool, notice: "Welcome to #{@pool.name}" }
         format.json { render status: :created, location: @pool }
       elsif authenticated === false
-        flash[:invalid_password] = 'The password provided was invalid'
+        flash[:invalid_code] = 'The invite code provided was invalid'
         format.html { render action: "join" }
         format.json { render json: @pool.errors, status: :unprocessable_entity }
       else

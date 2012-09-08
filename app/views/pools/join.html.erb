@@ -3,7 +3,7 @@
 </div>
 
 <%= form_tag join_pool_path(@pool), class: 'form-inline' do %>
-  <%- if flash[:invalid_password] %><div class="alert alert-error"><%= flash[:invalid_password] %></div><%- end %>
-  <%= text_field_tag :password, '', class: 'input-small', placeholder: 'Password' %>
+  <%- if flash[:invalid_code] %><div class="alert alert-error"><%= flash[:invalid_code] %></div><%- end %>
+  <%= text_field_tag :invite_code, '', class: 'input-small', placeholder: 'Invite Code' %>
   <%= submit_tag 'Join', class: 'btn btn-primary' %>
 <% end %>
