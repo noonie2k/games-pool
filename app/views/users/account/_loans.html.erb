@@ -1,21 +1,26 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Loan Status</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <%- @loans.each do |loan| %>
+<% if @loans.any? %>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td>
-          <%= image_tag loan.game.image(Game::SIZE_TINY) %>
-          <%= loan.game.title %>
-        </td>
-        <td><%= loan.status %></td>
+        <th>Title</th>
+        <th>Loan Status</th>
+        <th>Date</th>
       </tr>
-    <%- end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <%- @loans.each do |loan| %>
+        <tr>
+          <td>
+            <%= image_tag loan.game.image(Game::SIZE_TINY) %>
+            <%= loan.game.title %>
+          </td>
+          <td><%= loan.status %></td>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+
+<% else %>
+<p>You currently have no games on loan</p>
+<% end %>

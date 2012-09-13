@@ -1,20 +1,25 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Loan Status</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <%- @holds.each do |hold| %>
+<% if @holds.any? %>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td>
-          <%= image_tag hold.game.image(Game::SIZE_TINY) %>
-          <%= hold.game.title %>
-        </td>
+        <th>Title</th>
+        <th>Loan Status</th>
+        <th>Date</th>
       </tr>
-    <%- end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <%- @holds.each do |hold| %>
+        <tr>
+          <td>
+            <%= image_tag hold.game.image(Game::SIZE_TINY) %>
+            <%= hold.game.title %>
+          </td>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+
+<% else %>
+<p>You currently have no pending holds</p>
+<% end %>
