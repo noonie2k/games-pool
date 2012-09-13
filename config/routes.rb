@@ -4,6 +4,10 @@ GamesPool::Application.routes.draw do
       get  'find'
       post 'find'
     end
+
+    member do
+      get 'hold'
+    end
   end
 
   resources :pools do
@@ -17,6 +21,12 @@ GamesPool::Application.routes.draw do
     member do
       get 'account'
     end
+  end
+
+  controller :loans do
+    get 'loan/:id/issue' => :issue, as: 'issue_loan'
+    get 'loan/:id/return' => :return, as: 'return_loan'
+    get 'loan/:id/cancel' => :return, as: 'cancel_loan'
   end
 
   controller :sessions do

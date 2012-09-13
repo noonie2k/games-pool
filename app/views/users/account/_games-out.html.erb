@@ -1,0 +1,36 @@
+<% if @games_out.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>User</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%- @games_out.each do |loan| %>
+        <tr>
+          <td>
+            <%= image_tag loan.game.image(Game::SIZE_TINY) %>
+            <%= loan.game.title %>
+          </td>
+          <td><%= loan.user.name %></td>
+          <td><%= loan.created_at.localtime.strftime('%e %b %Y') %></td>
+          <td>
+            <%= link_to 'Issue', issue_loan_path(loan), class: 'btn btn-mini btn-success' %>
+            <%= link_to 'Cancel',
+              cancel_loan_path(loan),
+              method: 'delete',
+              confirm: 'Are you sure?',
+              class: 'btn btn-mini btn-danger' %>
+          </td>
+        </tr>
+      <%- end %>
+    </tbody>
+  </table>
+
+<% else %>
+  <p>None of your games are out on loan</p>
+<% end %>

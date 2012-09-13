@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Loan Status</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%- @holds.each do |hold| %>
+      <tr>
+        <td>
+          <%= image_tag hold.game.image(Game::SIZE_TINY) %>
+          <%= hold.game.title %>
+        </td>
+      </tr>
+    <%- end %>
+  </tbody>
+</table>

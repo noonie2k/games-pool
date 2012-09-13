@@ -4,3 +4,7 @@
 
 $.fn.outerHTML = () ->
   $(this).clone().wrap('<p>').parent().html()
+
+$ ->
+  $('a[disabled]').click (e) ->
+    e.preventDefault()

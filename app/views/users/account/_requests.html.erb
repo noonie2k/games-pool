@@ -1,0 +1,42 @@
+<% if @requests.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>User</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @requests.each do |game| %>
+        <% game[:loans].each_with_index do |loan, index| %>
+          <tr>
+            <td>
+              <%= image_tag loan.game.image(Game::SIZE_TINY) %>
+              <%= loan.game.title %>
+            </td>
+            <td><%= loan.user.name %></td>
+            <td><%= loan.created_at.localtime.strftime('%e %b %Y') %></td>
+            <td>
+              <% if game[:out] || index > 0 %>
+                <%= link_to 'Issue', issue_loan_path(loan), class: 'btn btn-mini btn-success', disabled: 'disabled' %>
+              <% else %>
+                <%= link_to 'Issue', issue_loan_path(loan), class: 'btn btn-mini btn-success' %>
+              <% end %>
+              <%= link_to 'Cancel',
+                cancel_loan_path(loan),
+                method: 'delete',
+                confirm: 'Are you sure?',
+                class: 'btn btn-mini btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+<% else %>
+  <p>You currently have no outstanding requests</p>
+<% end %>

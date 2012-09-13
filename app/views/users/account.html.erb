@@ -7,8 +7,16 @@
 
 <ul id="account-tabs" class="nav nav-tabs">
   <li class="active"><a href="#my-games" data-toggle="tab">My Games</a></li>
+  <li><a href="#my-holds" data-toggle="tab">My Holds</a></li>
+  <li><a href="#my-loans" data-toggle="tab">My Loans</a></li>
+  <li><a href="#requests" data-toggle="tab">Requests <%= icon('icon-warning-sign') if @requests.any? %></a></li>
+  <li><a href="#games-out" data-toggle="tab">Games Out <%= icon('icon-warning-sign') if @games_out.any? %></a></li>
 </ul>
 
 <div id="account-tabs-content" class="tab-content">
   <div id="my-games" class="tab-pane fade active in"><%= render 'users/account/games' %></div>
+  <div id="my-holds" class="tab-pane fade in"><%= render 'users/account/holds' %></div>
+  <div id="my-loans" class="tab-pane fade in"><%= render 'users/account/loans' %></div>
+  <div id="requests" class="tab-pane fade in"><%= render 'users/account/requests' %></div>
+  <div id="games-out" class="tab-pane fade in"><%= render 'users/account/games-out' %></div>
 </div>

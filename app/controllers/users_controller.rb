@@ -28,7 +28,18 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     redirect_to root_path unless logged_in_user === @user
     
+    # get additional data
     @games = @user.games.order(:title)
+    @loans = @user.loans.where(status: Loan::STATUS_ONLOAN)
+    @holds = @user.loans.where(status: Loan::STATUS_ONHOLD)
+    @requests = @user.games.collect do |game|
+      {
+        game: game,
+        out: game.loans.out.any?,
+        loans: game.loans.held.collect { |loan| loan }
+      }
+    end
+    @games_out = @user.games.collect { |game| game.loans.out }.flatten
   end
 
   # GET /users/new
