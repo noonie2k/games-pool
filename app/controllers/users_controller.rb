@@ -32,13 +32,7 @@ class UsersController < ApplicationController
     @games = @user.games.order(:title)
     @loans = @user.loans.where(status: Loan::STATUS_ONLOAN)
     @holds = @user.loans.where(status: Loan::STATUS_ONHOLD)
-    @requests = @user.games.collect do |game|
-      {
-        game: game,
-        out: game.loans.out.any?,
-        loans: game.loans.held.collect { |loan| loan }
-      }
-    end
+    @requests = @user.games.collect { |game| game.loans.held.first if game.loans.out.none? }.compact
     @games_out = @user.games.collect { |game| game.loans.out }.flatten
   end
 
