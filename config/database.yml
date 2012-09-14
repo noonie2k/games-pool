@@ -1,6 +1,7 @@
 common: &common
   adapter: postgresql
   username: adam
+  password: adam
 
 development:
   <<: *common

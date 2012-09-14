@@ -30,12 +30,11 @@ end
 
 gem 'jquery-rails'
 
-gem 'twitter-bootstrap-rails'
 gem 'simple_form'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
-gem "giantbomb", git: 'git://github.com/noonie2k/giantbomb.git'
+gem 'giantbomb'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
