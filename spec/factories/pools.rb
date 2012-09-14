@@ -3,7 +3,6 @@
 FactoryGirl.define do
   factory :pool do
     name "Some Test Pool"
-    password "poolpassword"
-    password_confirmation "poolpassword"
+    invite_code "a1b2c3d4"
   end
 end

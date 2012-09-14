@@ -120,7 +120,7 @@ class GamesController < ApplicationController
     @game.destroy
 
     respond_to do |format|
-      format.html { redirect_to account_user_path }
+      format.html { redirect_to account_user_path(logged_in_user) }
       format.json { head :no_content }
     end
   end

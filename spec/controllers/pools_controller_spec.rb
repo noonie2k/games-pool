@@ -31,15 +31,6 @@ describe PoolsController do
     FactoryGirl::attributes_for(:pool)
   end
 
-  # Represents a valid set of update attributes
-  def valid_update
-    update_attributes = valid_attributes
-    update_attributes.delete(:password)
-    update_attributes.delete(:password_confirmation)
-
-    update_attributes
-  end
-
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # PoolsController. Be sure to keep this updated too.
@@ -140,13 +131,13 @@ describe PoolsController do
 
       it "assigns the requested pool as @pool" do
         pool = FactoryGirl::create(:pool)
-        put :update, {:id => pool.to_param, :pool => valid_update}, valid_session
+        put :update, {:id => pool.to_param, :pool => valid_attributes}, valid_session
         assigns(:pool).should eq(pool)
       end
 
       it "redirects to the pool" do
         pool = FactoryGirl::create(:pool)
-        put :update, {:id => pool.to_param, :pool => valid_update}, valid_session
+        put :update, {:id => pool.to_param, :pool => valid_attributes}, valid_session
         response.should redirect_to(pool)
       end
     end
@@ -185,43 +176,21 @@ describe PoolsController do
     end
   end
 
-  describe "GET join" do
-    describe "when already a member of the pool" do
-      it "redirects to the pool page" do
-        pool = FactoryGirl::create(:pool)
-        pool.memberships.build({ user: @user })
-        pool.save
-        get :join, { id: pool.id }, valid_session
-        response.should redirect_to pool
-      end
-    end
-
-    describe "when not a member of the pool" do
-      it "assigns the selected pool as @pool" do
-        pool = FactoryGirl::create(:pool)
-        get :join, { id: pool.id }, valid_session
-        assigns(:pool).should == pool
-      end
-    end
-  end
-
   describe "POST join" do
-    describe "with valid password" do
+    describe "with valid invite code" do
       it "creates a membership and redirects to the pool" do
         pool = FactoryGirl::create(:pool)
         expect {
-          post :create_membership, { id: pool.id, password: pool.password }, valid_session
+          post :create_membership, { invite_code: pool.invite_code }, valid_session
         }.to change(Membership, :count).by(1)
         response.should redirect_to(pool_path(pool))
       end
     end
 
-    describe "with invalid password" do
+    describe "with invalid invite code" do
       it "re-renders the 'join' template" do
         pool = FactoryGirl::create(:pool)
-        # Trigger the behavior that occurs when invalid params are submitted
-        Membership.any_instance.stub(:save).and_return(false)
-        post :create_membership, { id: pool.id, password: 'This is incorrect' }, valid_session
+        post :create_membership, { invite_code: 'This is incorrect' }, valid_session
         response.should render_template('join')
       end
     end

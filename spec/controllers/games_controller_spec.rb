@@ -84,11 +84,11 @@ describe GamesController do
         assigns(:game).should be_persisted
       end
 
-      it "redirects to the created game" do
+      it "redirects to the user account" do
         FactoryGirl::create(:user)
         platform = FactoryGirl::create(:platform)
         post :create, {:game => valid_attributes.merge({ platform_id: platform.id })}, valid_session
-        response.should redirect_to(Game.last)
+        response.should redirect_to(account_user_path(valid_session[:user_id]))
       end
     end
 
@@ -129,10 +129,10 @@ describe GamesController do
         assigns(:game).should eq(game)
       end
 
-      it "redirects to the game" do
+      it "redirects to the user account" do
         game = FactoryGirl::create(:game)
         put :update, {:id => game.to_param, :game => valid_attributes}, valid_session
-        response.should redirect_to(game)
+        response.should redirect_to(account_user_path(valid_session[:user_id]))
       end
     end
 
@@ -163,10 +163,10 @@ describe GamesController do
       }.to change(Game, :count).by(-1)
     end
 
-    it "redirects to the games list" do
+    it "redirects to the user account" do
       game = FactoryGirl::create(:game)
       delete :destroy, {:id => game.to_param}, valid_session
-      response.should redirect_to(games_url)
+      response.should redirect_to(account_user_path(valid_session[:user_id]))
     end
   end
 
