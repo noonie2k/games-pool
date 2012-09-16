@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910150822) do
+ActiveRecord::Schema.define(:version => 20120915232952) do
 
   create_table "games", :force => true do |t|
     t.string   "title"
@@ -21,8 +21,10 @@ ActiveRecord::Schema.define(:version => 20120910150822) do
     t.integer  "owner_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "md5"
   end
 
+  add_index "games", ["md5"], :name => "index_games_on_md5"
   add_index "games", ["owner_id"], :name => "index_games_on_owner_id"
   add_index "games", ["platform_id"], :name => "index_games_on_platform_id"
 

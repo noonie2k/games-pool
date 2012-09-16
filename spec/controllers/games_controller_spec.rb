@@ -68,12 +68,15 @@ describe GamesController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Game" do
+      it "creates a new Game and sets an md5 hash" do
         FactoryGirl::create(:user)
         platform = FactoryGirl::create(:platform)
         expect {
           post :create, {:game => valid_attributes.merge({ platform_id: platform.id })}, valid_session
         }.to change(Game, :count).by(1)
+
+        game = Game.last
+        game.md5.should eq(Digest::MD5.hexdigest("#{game.title}-#{game.platform.id}"))
       end
 
       it "assigns a newly created game as @game" do

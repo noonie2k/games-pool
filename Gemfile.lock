@@ -74,6 +74,7 @@ GEM
       factory_girl (~> 4.1.0)
       railties (>= 3.0.0)
     ffi (1.1.5)
+    ffi (1.1.5-x86-mingw32)
     gherkin (2.11.2)
       json (>= 1.4.6)
     gherkin (2.11.2-x86-mingw32)

@@ -8,7 +8,7 @@
 <p id="notice"><%= notice %></p>
 
 <div id="games">
-  <%= render 'games', locals: { games: @games } %>
+  <%= render 'games', locals: { games: @pool.games(logged_in_user).paginate(page: params[:page], per_page: 8) } %>
 </div>
 
 <div id="game-details-modal" class="modal hide">

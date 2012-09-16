@@ -12,23 +12,21 @@ class PoolsController < ApplicationController
     end
   end
 
-  # GET /pools/1
-  # GET /pools/1.json
-  def show
-    @pool = Pool.find(params[:id])
-    @games = @pool.members.all.collect { |user| user.games }.flatten.sort { |a, b| a.title <=> b.title }
-    @games = @games.paginate(page: params[:page], per_page: 8)
+    # GET /pools/1
+    # GET /pools/1.json
+    def show
+      @pool = Pool.find(params[:id])
 
-    respond_to do |format|
-      if @pool.members.include?(logged_in_user)
-        format.html # show.html.erb
-        format.json { render json: @pool }
-        format.js
-      else
-        format.html { redirect_to pools_path, alert: 'You are not a member of the selected pool' }
-        format.json { render json: @pool, location: pools_path }
+      respond_to do |format|
+        if @pool.members.include?(logged_in_user)
+          format.html # show.html.erb
+          format.json { render json: @pool }
+          format.js
+        else
+          format.html { redirect_to pools_path, alert: 'You are not a member of the selected pool' }
+          format.json { render json: @pool, location: pools_path }
+        end
       end
-    end
   end
 
   # GET /pools/new
