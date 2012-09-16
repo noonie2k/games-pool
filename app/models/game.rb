@@ -1,11 +1,15 @@
+require 'digest/md5'
+
 class Game < ActiveRecord::Base
   belongs_to :platform
   belongs_to :owner, class_name: 'User'
   has_many :loans
 
-  attr_accessible :img_thumb_url, :img_tiny_url, :platform_id, :title
+  attr_accessible :img_thumb_url, :img_tiny_url, :md5, :platform_id, :title
 
   validates :owner, :platform, :title, presence: true
+
+  before_save :build_md5
 
   SIZE_TINY  = 'tiny'
   SIZE_THUMB = 'thumb'
@@ -13,6 +17,10 @@ class Game < ActiveRecord::Base
   AVAILABILITY_AVAILABLE = 'available'
   AVAILABILITY_ONHOLD    = 'on_hold'
   AVAILABILITY_ONLOAN    = 'on_loan'
+
+  def build_md5
+    self.md5 = Digest::MD5.hexdigest("#{self.title}-#{self.platform.id}")
+  end
 
   def image(size)
     begin
