@@ -11,6 +11,9 @@ class Loan < ActiveRecord::Base
   scope :held, where(status: Loan::STATUS_ONHOLD)
   scope :out, where(status: Loan::STATUS_ONLOAN)
 
+  # Find loans for games with the specified md5 hash
+  scope :md5, lambda { |md5| joins(:game).where('games.md5 = ?', md5) }
+
   before_save :default_status
 
   def default_status 
