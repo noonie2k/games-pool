@@ -7,7 +7,8 @@ Feature: Pools Administration
   	Given I have a registered account
       And I am logged in
 
-  Scenario: Creating a pool with a password
+  Scenario: Creating a pool
     When I create a pool
     Then I should be redirected to the last pool page
       And I should be shown a notice with welcome
+      And I should be shown the invite code

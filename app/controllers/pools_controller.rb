@@ -1,5 +1,3 @@
-require 'digest/sha1'
-
 class PoolsController < ApplicationController
   # GET /pools
   # GET /pools.json
@@ -23,7 +21,7 @@ class PoolsController < ApplicationController
           format.json { render json: @pool }
           format.js
         else
-          format.html { redirect_to pools_path, alert: 'You are not a member of the selected pool' }
+          format.html { redirect_to root_path, alert: 'You are not a member of the selected pool' }
           format.json { render json: @pool, location: pools_path }
         end
       end
@@ -48,10 +46,7 @@ class PoolsController < ApplicationController
   # POST /pools
   # POST /pools.json
   def create
-    @pool = Pool.new({
-      name: params[:pool][:name],
-      invite_code: Digest::SHA1.hexdigest("#{params[:pool][:name]}-#{Time.now.to_i}-#{rand}")[8..16]
-    })
+    @pool = Pool.new({ name: params[:pool][:name] })
 
     respond_to do |format|
       if @pool.save

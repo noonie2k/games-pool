@@ -1,11 +1,19 @@
+require 'digest/md5'
+
 class Pool < ActiveRecord::Base
   has_many :memberships
   has_many :members, through: :memberships, source: :user
 
   attr_accessible :name, :invite_code
 
-  validates :name, :invite_code, presence: true
+  validates :name, presence: true
   validates :name, uniqueness: true
+
+  before_save :generate_invite_code
+
+  def generate_invite_code
+    self.invite_code = Digest::MD5.hexdigest("#{self.name}-#{Time.now.to_i}-#{rand}")[8..16]
+  end
 
   def authenticate(entered_code)
     invite_code === entered_code
