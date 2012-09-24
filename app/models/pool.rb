@@ -4,7 +4,7 @@ class Pool < ActiveRecord::Base
 
   attr_accessible :name, :invite_code
 
-  validates :name, :invite_code, presence: true
+  validates :name, presence: true
   validates :name, uniqueness: true
 
   def authenticate(entered_code)

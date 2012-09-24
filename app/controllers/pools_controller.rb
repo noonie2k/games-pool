@@ -23,7 +23,7 @@ class PoolsController < ApplicationController
           format.json { render json: @pool }
           format.js
         else
-          format.html { redirect_to pools_path, alert: 'You are not a member of the selected pool' }
+          format.html { redirect_to root_path, alert: 'You are not a member of the selected pool' }
           format.json { render json: @pool, location: pools_path }
         end
       end

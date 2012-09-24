@@ -9,5 +9,5 @@ Feature: Games Creation
 
   Scenario: User creates a game with valid data
     When I create a game
-    Then I should be redirected to the games page
+    Then I should be redirected to my account page
       And I should be shown a notice with game created

@@ -21,6 +21,8 @@ module PathsHelpers
       send("#{$2}_path", model_instance)
     elsif page_name.match(/the (.+) page/)
       send("#{$1.gsub(' ', '_')}_path") rescue nil
+    elsif page_name.match(/my account page/)
+      account_user_path(@user)
     end
   end
 end

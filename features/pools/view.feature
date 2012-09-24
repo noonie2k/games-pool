@@ -10,9 +10,9 @@ Feature: Viewing Pools
 
   Scenario: User visits a site he is a member of
     When I go to the last pool page
-    Then I should be on the pools page
+    Then I should be redirected to the home page
 
   Scenario: User visits a site he is not a member of
     When I go to the last pool page
-    Then I should be redirected to the pools page
+    Then I should be redirected to the home page
       And I should be shown a notice with not a member
