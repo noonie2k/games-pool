@@ -88,7 +88,7 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to account_user_path(logged_in_user), notice: "#{@game.title} was updated successfully" }
+        format.html { redirect_to account_user_path(logged_in_user), notice: "#{@game.title} was created successfully" }
         format.json { render json: @game, status: :created, location: @game }
       else
         format.html { render action: "new" }
