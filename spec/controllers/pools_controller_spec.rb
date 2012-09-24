@@ -51,7 +51,7 @@ describe PoolsController do
       it "redirects to the pools page" do
         pool = FactoryGirl::create(:pool)
         get :show, {:id => pool.to_param}, valid_session
-        response.should redirect_to pools_path
+        response.should redirect_to root_path
       end
     end
     describe "when user is a member" do

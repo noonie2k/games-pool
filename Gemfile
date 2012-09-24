@@ -21,6 +21,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'simplecov'
   gem 'rspec-rails'
   gem 'email_spec'
   gem 'cucumber-rails', require: false
