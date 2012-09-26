@@ -31,7 +31,7 @@ describe GamesController do
   # in order to pass any filters (e.g. authentication) defined in
   # GamesController. Be sure to keep this updated too.
   def valid_session
-    { user_id: User.find_by_username('user').id }
+    { user_id: User.first.id }
   end
 
   describe "GET index" do

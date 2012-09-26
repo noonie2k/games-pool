@@ -1,3 +1,13 @@
+### GIVEN ###
+Given /^There are existing games$/ do
+  FactoryGirl::create(:game)
+  FactoryGirl::create(:game_with_same_title_and_platform)
+end
+
+Given /^I have a hold on the (first|last) game$/ do |position|
+  Game.send(position).loans.create({ user: @user })
+end
+
 ### WHEN ###
 When /^I create a game$/ do
   platform = FactoryGirl::create(:platform)
@@ -11,4 +21,10 @@ When /^I create a game$/ do
   click_button 'Create Game'
 
   @game = Game.last
+end
+
+When /^I request a hold on the (first|last) game$/ do |position|
+  click_link 'Place Hold'
+
+  @game = Game.send(position)
 end
