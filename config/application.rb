@@ -71,6 +71,9 @@ module GamesPool
     # Don't cache classes when running a drb server
     config.cache_classes = !(ENV['DRB'] == 'true')
 
+    # Heroku requires this to be false
+    config.assets.initialize_on_precompile = false
+
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       g.view_specs false
