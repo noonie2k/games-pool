@@ -12,7 +12,7 @@ class Pool < ActiveRecord::Base
   before_save :generate_invite_code
 
   def generate_invite_code
-    self.invite_code = Digest::MD5.hexdigest("#{name}-#{created_at}")[8..16]
+    self.invite_code = Digest::MD5.hexdigest("#{name}-#{created_at}")[9..16]
   end
 
   def authenticate(entered_code)

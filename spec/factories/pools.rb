@@ -1,7 +1,11 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+require 'factory_girl'
 
 FactoryGirl.define do
   factory :pool do
-    name "Some Test Pool"
+    name 'Pool A'
+  end
+
+  factory :second_pool, class: Pool do
+    name 'Pool B'
   end
 end

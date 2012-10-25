@@ -16,6 +16,9 @@
 /log/*.log
 /tmp
 
+# Ignore coverage files
+coverage
+
 # Ignore RubyMine stuff
 /.idea/*
 

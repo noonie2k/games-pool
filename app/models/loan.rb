@@ -14,9 +14,19 @@ class Loan < ActiveRecord::Base
   # Find loans for games with the specified md5 hash
   scope :md5, lambda { |md5| joins(:game).where('games.md5 = ?', md5) }
 
+  validate :no_existing_holds_on_this_game_and_platform
+
   before_save :default_status
 
-  def default_status 
+  protected
+
+  def default_status
     self.status ||= Loan::STATUS_ONHOLD
+  end
+
+  def no_existing_holds_on_this_game_and_platform
+    if user.loans.active.select { |loan| loan.game.md5 == game.md5 }
+      errors.add(:game, "You have an existing hold on #{game.title}")
+    end
   end
 end

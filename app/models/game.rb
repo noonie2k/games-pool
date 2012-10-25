@@ -7,11 +7,10 @@ class Game < ActiveRecord::Base
 
   attr_accessible :img_thumb_url, :img_tiny_url, :md5, :platform_id, :title
 
-  validates :owner, :platform, :title, presence: true
-  validates :md5, uniqueness: { message: 'A game with this title and platform already exists in your collection' }
+  validates :owner, :platform, :title, :md5, presence: true
+  validate :unique_in_collection
 
   before_validation :build_md5
-  after_validation :attach_md5_message_to_title
 
   SIZE_TINY  = 'tiny'
   SIZE_THUMB = 'thumb'
@@ -38,21 +37,22 @@ class Game < ActiveRecord::Base
   end
 
   def availability
-    return AVAILABILITY_ONHOLD if loans.where(status: Loan::STATUS_ONHOLD).any?
-    return AVAILABILITY_ONLOAN if loans.where(status: Loan::STATUS_ONLOAN).any?
+    game_availability = AVAILABILITY_AVAILABLE
+    game_availability = AVAILABILITY_ONHOLD if loans.where(status: Loan::STATUS_ONHOLD).any?
+    game_availability = AVAILABILITY_ONLOAN if loans.where(status: Loan::STATUS_ONLOAN).any?
 
-    AVAILABILITY_AVAILABLE
+    game_availability
   end
 
   protected
 
   def build_md5
-    self.md5 = Digest::MD5.hexdigest("#{title}-#{platform.id}-#{owner.id}")
+    self.md5 = Digest::MD5.hexdigest("#{title}-#{platform.id}") if platform.present?
   end
 
-  def attach_md5_message_to_title
-    if errors[:md5].present?
-      errors[:title] << errors[:md5][0]
+  def unique_in_collection
+    if owner && owner.games.where(md5: md5).any?
+      errors.add(:title, 'A game with this title and platform already exists in your collection')
     end
   end
 end

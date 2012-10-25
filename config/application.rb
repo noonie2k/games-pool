@@ -69,7 +69,7 @@ module GamesPool
     config.assets.version = '1.0'
 
     # Don't cache classes when running a drb server
-    config.cache_classes = !(ENV['DRB'] == 'true')
+    # config.cache_classes = !(ENV['DRB'] == 'true')
 
     # Heroku requires this to be false
     config.assets.initialize_on_precompile = false
