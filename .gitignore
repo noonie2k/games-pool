@@ -18,3 +18,7 @@
 
 # Ignore RubyMine stuff
 /.idea/*
+
+# Ignore Tags Files
+TAGS
+.tags*

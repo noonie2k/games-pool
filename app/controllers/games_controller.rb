@@ -27,6 +27,8 @@ class GamesController < ApplicationController
     respond_to do |format|
       if @game.owner == logged_in_user
         format.html { redirect_to game_path(@game), alert: "You can't place holds on your own games!" }
+      elsif logged_in_user.games.where(md5: @game.md5).any?
+        format.html { redirect_to game_path(@game), alert: "You own a copy of this game on this platform; don't hog it!" }
       elsif Loan.active.md5(@game.md5).where(user_id: logged_in_user.id).any?
         format.html { redirect_to game_path(@game), alert: "You have an existing hold on #{@game.title}" }
       elsif @game.loans.new({ user: logged_in_user }).save

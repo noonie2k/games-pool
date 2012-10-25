@@ -19,6 +19,13 @@ body {
   padding-top: 60px;
 }
 
+.input-prepend input,
+.input-append input,
+.input-prepend input[class*="span"],
+.input-append input[class*="span"] {
+  width: 206px;
+}
+
 .spinner {
   background: {
     image: url('/assets/spinner.gif');
