@@ -37,12 +37,6 @@ class GamesController < ApplicationController
     end
   end
 
-  def issue
-  end
-
-  def return
-  end
-
   # GET /games/new
   # GET /games/new.json
   def new

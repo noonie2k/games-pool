@@ -68,6 +68,9 @@ module GamesPool
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # Don't cache classes when running a drb server
+    config.cache_classes = !(ENV['DRB'] == 'true')
+
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       g.view_specs false

@@ -24,9 +24,9 @@ GamesPool::Application.routes.draw do
   end
 
   controller :loans do
-    get 'loan/:id/issue' => :issue, as: 'issue_loan'
-    get 'loan/:id/return' => :return, as: 'return_loan'
-    get 'loan/:id/cancel' => :return, as: 'cancel_loan'
+    post 'loan/issue/:id'    => :issue,    as: 'issue_loan'
+    post 'loan/complete/:id' => :complete, as: 'complete_loan'
+    post 'loan/cancel/:id  ' => :cancel,   as: 'cancel_loan'
   end
 
   controller :sessions do

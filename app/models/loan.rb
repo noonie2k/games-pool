@@ -3,9 +3,9 @@ class Loan < ActiveRecord::Base
   belongs_to :game
   attr_accessible :game, :status, :user
 
-  STATUS_ONHOLD   = 1
-  STATUS_ONLOAN   = 2
-  STATUS_RETURNED = 3
+  STATUS_ONHOLD    = 1
+  STATUS_ONLOAN    = 2
+  STATUS_COMPLETED = 3
 
   scope :active, where(status: [Loan::STATUS_ONHOLD, Loan::STATUS_ONLOAN])
   scope :held, where(status: Loan::STATUS_ONHOLD)
