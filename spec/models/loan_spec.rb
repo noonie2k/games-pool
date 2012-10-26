@@ -24,5 +24,25 @@ describe Loan do
       loan.user = nil
       loan.should be_invalid
     end
+
+    it 'should be invalid if the user is the owner of the game' do
+      loan.user = loan.game.owner
+      loan.should be_invalid
+    end
+
+    it 'should be invalid if the user owns the same game on the same platform' do
+      loan.user.games.build({
+          title: loan.game.title,
+          platform_id: loan.game.platform.id
+        }).save
+      loan.should be_invalid
+    end
+
+    it 'should be invalid if the user has an active hold on the same game elsewhere' do
+      loans = stub
+      loans.should_receive(:md5).with(loan.game.md5) { [1] }
+      loan.user.should_receive(:loans) { loans }
+      loan.should be_invalid
+    end
   end
 end

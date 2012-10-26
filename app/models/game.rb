@@ -5,7 +5,7 @@ class Game < ActiveRecord::Base
   belongs_to :owner, class_name: 'User'
   has_many :loans
 
-  attr_accessible :img_thumb_url, :img_tiny_url, :md5, :platform_id, :title
+  attr_accessible :img_thumb_url, :img_tiny_url, :md5, :owner, :platform_id, :title
 
   validates :owner, :platform, :title, :md5, presence: true
   validate :unique_in_collection

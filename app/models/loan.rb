@@ -15,6 +15,8 @@ class Loan < ActiveRecord::Base
   scope :md5, lambda { |md5| joins(:game).where('games.md5 = ?', md5) }
 
   validates :game, :user, presence: true
+  validate :user_does_not_own_the_same_game_on_the_same_platform,
+           :user_does_not_have_active_loans_on_the_same_game_on_the_same_platform
 
   before_save :default_status
 
@@ -24,9 +26,15 @@ class Loan < ActiveRecord::Base
     self.status ||= Loan::STATUS_ONHOLD
   end
 
-  def no_existing_holds_on_this_game_and_platform
-    if user.loans.active.select { |loan| loan.game.md5 == game.md5 }
-      errors.add(:game, "You have an existing hold on #{game.title}")
+  def user_does_not_own_the_same_game_on_the_same_platform
+    if user && user.games.where(md5: game.md5).any?
+      errors.add(:game, "You can't loan games that you own")
+    end
+  end
+
+  def user_does_not_have_active_loans_on_the_same_game_on_the_same_platform
+    if user && user.loans.md5(game.md5).any?
+      errors.add(:game, "You already have an active hold/loan on #{game.title}")
     end
   end
 end

@@ -23,18 +23,13 @@ class GamesController < ApplicationController
 
   def hold
     @game = Game.find(params[:id])
+    loan = @game.loans.new({ user: logged_in_user })
 
     respond_to do |format|
-      if @game.owner == logged_in_user
-        format.html { redirect_to game_path(@game), alert: "You can't place holds on your own games!" }
-      elsif logged_in_user.games.where(md5: @game.md5).any?
-        format.html { redirect_to game_path(@game), alert: "You own a copy of this game on this platform; don't hog it!" }
-      elsif Loan.active.md5(@game.md5).where(user_id: logged_in_user.id).any?
-        format.html { redirect_to game_path(@game), alert: "You have an existing hold on #{@game.title}" }
-      elsif @game.loans.new({ user: logged_in_user }).save
+      if loan.save
         format.html { redirect_to game_path(@game), notice: "A hold has been requested of #{@game.owner.name} for #{@game.title}" }
       else
-        format.html { redirect_to game_path(@game), alert: "An error was encountered when attempting to hold #{@game.title}" }
+        format.html { redirect_to game_path(@game), alert: loan.errors[:game].first }
       end
     end
   end
