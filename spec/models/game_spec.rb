@@ -25,6 +25,14 @@ describe Game do
       game.should be_invalid
     end
 
+    it 'should not allow duplicates' do
+      game.save
+      game.owner.games.build({
+          title: game.title,
+          platform_id: game.platform.id
+        }).should be_invalid
+    end
+
     it 'should have a generated md5 hash after validations' do
       game.md5.should be_nil
       game.valid?
