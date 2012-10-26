@@ -14,7 +14,7 @@ class Loan < ActiveRecord::Base
   # Find loans for games with the specified md5 hash
   scope :md5, lambda { |md5| joins(:game).where('games.md5 = ?', md5) }
 
-  validate :no_existing_holds_on_this_game_and_platform
+  validates :game, :user, presence: true
 
   before_save :default_status
 

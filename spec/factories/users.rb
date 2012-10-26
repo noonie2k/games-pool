@@ -10,10 +10,10 @@ FactoryGirl.define do
     admin false
   end
 
-  factory :existing_user, class: User  do
-    username 'someuser'
-    name 'Some User'
-    email 'someuser@somewhere.com'
+  factory :second_user, class: User  do
+    username 'seconduser'
+    name 'Second User'
+    email 'seconduser@somewhere.com'
     password 'secret'
     password_confirmation 'secret'
     admin false

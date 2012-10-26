@@ -5,13 +5,13 @@ describe User do
     FactoryGirl::build(:user)
   end
 
-  let :existing_user do
-    FactoryGirl::create(:existing_user)
+  let :second_user do
+    FactoryGirl::create(:second_user)
   end
 
   it 'should have valid factories' do
     user.should be_valid
-    existing_user.should be_valid
+    second_user.should be_valid
   end
 
   context 'validations' do
@@ -43,16 +43,16 @@ describe User do
 
   context 'with an existing user in the system' do
     before :each do
-      existing_user.save
+      second_user.save
     end
 
     it 'should not allow duplicate usernames' do
-      user.username = existing_user.username
+      user.username = second_user.username
       user.valid?.should == false
     end
 
     it 'should not allow duplicate emails' do
-      user.email = existing_user.email
+      user.email = second_user.email
       user.valid?.should == false
     end
   end
